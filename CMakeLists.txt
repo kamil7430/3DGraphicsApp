@@ -82,7 +82,9 @@ endif()
 
 # APP
 add_executable(3DGraphicsApp src/main.cpp
-        src/stb_impl.cpp)
+        src/stb_impl.cpp
+        src/shaders/shader.cpp
+        src/shaders/shader.h)
 
 find_package(OpenGL REQUIRED)
 
