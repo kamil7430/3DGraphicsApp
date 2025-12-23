@@ -49,7 +49,7 @@ execute_process(
 )
 
 if(NOT GLAD_GEN_RESULT EQUAL 0)
-    message(FATAL_ERROR "Błąd generowania GLAD.")
+    message(FATAL_ERROR "GLAD generation error.")
 endif()
 
 add_library(glad STATIC "${GLAD_OUT_DIR}/src/gl.c")
@@ -81,7 +81,8 @@ if (NOT TARGET stb)
 endif()
 
 # APP
-add_executable(3DGraphicsApp main.cpp)
+add_executable(3DGraphicsApp main.cpp
+        stb_impl.cpp)
 
 find_package(OpenGL REQUIRED)
 
