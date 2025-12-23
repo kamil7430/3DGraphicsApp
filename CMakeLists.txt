@@ -81,8 +81,8 @@ if (NOT TARGET stb)
 endif()
 
 # APP
-add_executable(3DGraphicsApp main.cpp
-        stb_impl.cpp)
+add_executable(3DGraphicsApp src/main.cpp
+        src/stb_impl.cpp)
 
 find_package(OpenGL REQUIRED)
 
