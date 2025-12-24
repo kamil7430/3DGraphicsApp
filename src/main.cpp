@@ -23,6 +23,10 @@ void processInput(GLFWwindow *window)
         glfwSetWindowShouldClose(window, true);
 }
 
+float aspectRatio() {
+    return static_cast<float>(windowWidth) / static_cast<float>(windowHeight);
+}
+
 int main() {
     // Window creation
     glfwInit();
@@ -94,7 +98,15 @@ int main() {
     shader.use();
 
     glEnable(GL_DEPTH_TEST);
-    glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+
+    // Constant transform matrices
+    glm::mat4 viewMat(1.0f);
+    viewMat = glm::translate(viewMat, glm::vec3(0.0f, 0.0f, -3.0f));
+    glUniformMatrix4fv(shader.getUniformLocation("view"), 1, GL_FALSE, glm::value_ptr(viewMat));
+
+    glm::mat4 projectionMat = glm::perspective(glm::radians(90.0f), aspectRatio(), 0.1f, 100.0f);
+    glUniformMatrix4fv(shader.getUniformLocation("projection"), 1, GL_FALSE, glm::value_ptr(projectionMat));
 
     // Main loop
     while (!glfwWindowShouldClose(window)) {
@@ -102,14 +114,17 @@ int main() {
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        glBindVertexArray(VAO1);
-        glDrawArrays(GL_TRIANGLES, 0, sizeof(indices1) / 3);
+        glm::mat4 modelMat(1.0f);
+        modelMat = glm::rotate(modelMat, static_cast<float>(glfwGetTime()), glm::vec3(0.5f, 0.2f, 0.0f));
+        glUniformMatrix4fv(shader.getUniformLocation("model"), 1, GL_FALSE, glm::value_ptr(modelMat));
+
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO1);
+        glDrawElements(GL_TRIANGLES, sizeof(indices1), GL_UNSIGNED_INT, nullptr);
 
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
 
     glfwTerminate();
-
     return 0;
 }
