@@ -86,6 +86,18 @@ add_executable(3DGraphicsApp src/main.cpp
         src/shaders/shader.cpp
         src/shaders/shader.h)
 
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
+add_custom_command(TARGET 3DGraphicsApp POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_SOURCE_DIR}/src/shaders/vertex
+        $<TARGET_FILE_DIR:3DGraphicsApp>/shaders/vertex
+)
+add_custom_command(TARGET 3DGraphicsApp POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_SOURCE_DIR}/src/shaders/fragment
+        $<TARGET_FILE_DIR:3DGraphicsApp>/shaders/fragment
+)
+
 find_package(OpenGL REQUIRED)
 
 target_link_libraries(3DGraphicsApp PRIVATE
