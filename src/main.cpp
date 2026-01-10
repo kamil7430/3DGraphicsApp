@@ -94,7 +94,7 @@ int main() {
     glEnableVertexAttribArray(1);
 
     // Shaders
-    const Shader shader("./shaders/vertex/example.vert", "./shaders/fragment/example.frag");
+    const Shader shader("shaders/vertex/example.vert", "shaders/fragment/example.frag");
     shader.use();
 
     glEnable(GL_DEPTH_TEST);
