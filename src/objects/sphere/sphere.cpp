@@ -7,10 +7,12 @@
 
 static constexpr char vertexShader[] = {
     #embed "sphere.vert"
+    , 0
 };
 
 static constexpr char fragmentShader[] = {
     #embed "sphere.frag"
+    , 0
 };
 
 Sphere::Sphere(const int stackCount, const int sectorCount) : shader(vertexShader, fragmentShader) {
@@ -44,7 +46,7 @@ Sphere::Sphere(const int stackCount, const int sectorCount) : shader(vertexShade
     }
 
     // Calculate indices array
-    std::vector<int> indices = {};
+    std::vector<unsigned int> indices = {};
     for (int i = 0; i < stackCount; ++i) {
         int k1 = i * (sectorCount + 1); // beginning of current stack
         int k2 = k1 + sectorCount + 1; // beginning of next stack
@@ -102,5 +104,5 @@ void Sphere::draw(glm::mat4 &model, glm::mat4 &view, glm::mat4 &projection) {
 Sphere::~Sphere() {
     glDeleteBuffers(1, &ebo);
     glDeleteBuffers(1, &vbo);
-    glDeleteBuffers(1, &vao);
+    glDeleteVertexArrays(1, &vao);
 }
