@@ -21,12 +21,12 @@ W każdym projekcie:
 Dla mojego zakresu nazwisk:
 
 - [ ] model oświetlenia liczony jest w układzie kamery
-- [ ] krótka dokumentacja dotycząca zaimplementowanej indywidualnej funkcjonalności
 
 Dodatkowo nalezy uzupełnić projekt o:
 
 - [ ] Lustro na scenie (na ruchomym obiekcie)
 - [ ] możliwość zmiany składowej zwierciadlanej Phong/Blinn
+- [ ] krótka dokumentacja dotycząca zaimplementowanej indywidualnej funkcjonalności
 
 Proszę pamiętać o:
 
