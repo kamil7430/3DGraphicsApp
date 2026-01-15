@@ -83,9 +83,9 @@ endif()
 # APP
 add_executable(3DGraphicsApp src/main.cpp
         src/stb_impl.cpp
-        src/shaders/file_helper.h
-        src/shaders/shader.cpp
-        src/shaders/shader.h
+        src/file_helper.h
+        src/shader.cpp
+        src/shader.h
 )
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)

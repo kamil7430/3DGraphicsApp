@@ -6,7 +6,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <stb_image.h>
 
-#include "shaders/shader.h"
+#include "shader.h"
 
 int windowWidth = 800, windowHeight = 600;
 
