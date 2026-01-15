@@ -6,7 +6,6 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <stb_image.h>
 
-#include "shader.h"
 #include "objects/sphere/sphere.h"
 
 int windowWidth = 800, windowHeight = 600;
