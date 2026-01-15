@@ -1,0 +1,36 @@
+Aplikacja jest kontunuacją aplikacji rozpoczętej na laboartorium, ma pokazywać prostą scenę składającą się kul, sześcianów itp., ale można też (a nawet warto) wczytać złożone modele 3D w popularnych formatach (OBJ, FBX, 3DS, itp.). Można wykorzystać bibliotekę do wczytywania modeli 3D (np. Assimp).
+
+W każdym projekcie:
+
+- [ ] jeden obiekt poruszający się (przesuwanie + obroty)
+- [ ] kilka stałych obiektów. Jeden z nich gładki — kula, torus lub powierzchnia Beziera
+- [ ] Jeśli nie ustalono inaczej, w każdym projekcie min. 3 kamery (przełączanie):
+  - [ ] nieruchoma obserwująca scenę
+  - [ ] nieruchoma śledząca ruchomy obiekt
+  - [ ] związana z ruchomym obiektem (FPP — First Person Perspective lub TPP — Third Person Perspective)
+- [ ] W każdym projekcie kilka źródeł światła (min. 3):
+  - [ ] min. jeden reflektor na poruszającym się obiekcie (np. światła samochodu)
+  - [ ] musi istnieć możliwość zmiany (ręcznej) względnego kierunku świecenia reflektora/ów umieszczonego na obiekcie ruchomym
+  - [ ] min. jedno stałe (nieporuszające się) źródło światła (punktowe lub reflektor)
+- [ ] rzutowanie perspektywiczne
+- [ ] model cieniowania Phonga (Interpolacja wektorów normalnych)
+- [ ] mgła — płynna zmiana
+- [ ] noc/dzień
+- [ ] "zanikanie" światła wraz z odległością
+
+Dla mojego zakresu nazwisk:
+
+- [ ] model oświetlenia liczony jest w układzie kamery
+- [ ] krótka dokumentacja dotycząca zaimplementowanej indywidualnej funkcjonalności
+
+Dodatkowo nalezy uzupełnić projekt o:
+
+- [ ] Lustro na scenie (na ruchomym obiekcie)
+- [ ] możliwość zmiany składowej zwierciadlanej Phong/Blinn
+
+Proszę pamiętać o:
+
+- Poprawnym potoku renderowania pod kątem transformacji
+- Macierze modelu dla każdego obiektu, macierze widoku dla każdej z kamer, macierz rzutowania
+- Poprawnym przekształcaniu wektora normalnego (innym niż przekształcanie punktów!)
+- Projekty należy oddawać osobiście.
