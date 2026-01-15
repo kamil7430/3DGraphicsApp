@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 4.0)
 project(3DGraphicsApp)
 
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 include(FetchContent)
@@ -83,22 +83,13 @@ endif()
 # APP
 add_executable(3DGraphicsApp src/main.cpp
         src/stb_impl.cpp
-        src/file_helper.h
         src/shader.cpp
         src/shader.h
+        src/objects/sphere/sphere.cpp
+        src/objects/sphere/sphere.h
 )
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
-add_custom_command(TARGET 3DGraphicsApp POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy_directory
-        ${CMAKE_SOURCE_DIR}/src/shaders/vertex
-        $<TARGET_FILE_DIR:3DGraphicsApp>/shaders/vertex
-)
-add_custom_command(TARGET 3DGraphicsApp POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy_directory
-        ${CMAKE_SOURCE_DIR}/src/shaders/fragment
-        $<TARGET_FILE_DIR:3DGraphicsApp>/shaders/fragment
-)
 
 find_package(OpenGL REQUIRED)
 
