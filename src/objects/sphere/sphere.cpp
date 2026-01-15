@@ -89,6 +89,8 @@ Sphere::Sphere(const int stackCount, const int sectorCount) : shader(vertexShade
 }
 
 void Sphere::draw(glm::mat4 &model, glm::mat4 &view, glm::mat4 &projection) {
+    shader.use();
+
     glUniformMatrix4fv(shader.getUniformLocation("view"), 1, GL_FALSE, glm::value_ptr(view));
     glUniformMatrix4fv(shader.getUniformLocation("projection"), 1, GL_FALSE, glm::value_ptr(projection));
     glUniformMatrix4fv(shader.getUniformLocation("model"), 1, GL_FALSE, glm::value_ptr(model));

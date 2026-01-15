@@ -7,6 +7,7 @@
 #include <stb_image.h>
 
 #include "shader.h"
+#include "objects/sphere/sphere.h"
 
 int windowWidth = 800, windowHeight = 600;
 
@@ -57,56 +58,17 @@ int main() {
 
     stbi_set_flip_vertically_on_load(true);
 
-    // Data
-    constexpr float vertices1[] = {
-        // positions            // colors
-         1.0f,  1.0f,  1.0f,    1.0f, 0.0f, 0.0f, // v0 - red
-        -1.0f, -1.0f,  1.0f,    0.0f, 1.0f, 0.0f, // v1 - green
-        -1.0f,  1.0f, -1.0f,    0.0f, 0.0f, 1.0f, // v2 - blue
-         1.0f, -1.0f, -1.0f,    1.0f, 1.0f, 0.0f  // v3 - yellow
-    };
-
-    constexpr unsigned int indices1[] = {
-        0, 1, 2,
-        0, 3, 1,
-        0, 2, 3,
-        1, 3, 2
-    };
-
-    // OpenGL data objects
-    unsigned int VAO1;
-    glGenVertexArrays(1, &VAO1);
-    glBindVertexArray(VAO1);
-
-    unsigned int VBO1;
-    glGenBuffers(1, &VBO1);
-    glBindBuffer(GL_ARRAY_BUFFER, VBO1);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices1), vertices1, GL_STATIC_DRAW);
-
-    unsigned int EBO1;
-    glGenBuffers(1, &EBO1);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO1);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices1), indices1, GL_STATIC_DRAW);
-
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), reinterpret_cast<void *>(0));
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), reinterpret_cast<void *>(3 * sizeof(float)));
-    glEnableVertexAttribArray(1);
-
-    // Shaders
-    const Shader shader("shaders/vertex/example.vert", "shaders/fragment/example.frag");
-    shader.use();
-
     glEnable(GL_DEPTH_TEST);
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+
+    // Sphere
+    Sphere sphere(15, 15);
 
     // Constant transform matrices
     glm::mat4 viewMat(1.0f);
     viewMat = glm::translate(viewMat, glm::vec3(0.0f, 0.0f, -3.0f));
-    glUniformMatrix4fv(shader.getUniformLocation("view"), 1, GL_FALSE, glm::value_ptr(viewMat));
 
     glm::mat4 projectionMat = glm::perspective(glm::radians(90.0f), aspectRatio(), 0.1f, 100.0f);
-    glUniformMatrix4fv(shader.getUniformLocation("projection"), 1, GL_FALSE, glm::value_ptr(projectionMat));
 
     // Main loop
     while (!glfwWindowShouldClose(window)) {
@@ -116,10 +78,8 @@ int main() {
 
         glm::mat4 modelMat(1.0f);
         modelMat = glm::rotate(modelMat, static_cast<float>(glfwGetTime()), glm::vec3(0.5f, 0.2f, 0.0f));
-        glUniformMatrix4fv(shader.getUniformLocation("model"), 1, GL_FALSE, glm::value_ptr(modelMat));
 
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO1);
-        glDrawElements(GL_TRIANGLES, sizeof(indices1), GL_UNSIGNED_INT, nullptr);
+        sphere.draw(modelMat, viewMat, projectionMat);
 
         glfwSwapBuffers(window);
         glfwPollEvents();
