@@ -22,7 +22,7 @@ RubberDucky::RubberDucky() : shader(vertexShader, fragmentShader) {
     std::vector<float> vertices = {};
     std::vector<unsigned int> indices = {};
 
-    initialize3dModel(vertices, indices, rubberDucky, sizeof(rubberDucky), "3ds", materialColors, subMeshes, 1.0f);
+    initialize3dModel(vertices, indices, rubberDucky, sizeof(rubberDucky), "3ds", materialColors, subMeshes, 3.0f);
 
     indicesCount = indices.size();
 
