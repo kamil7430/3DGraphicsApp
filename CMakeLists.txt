@@ -80,6 +80,14 @@ if (NOT TARGET stb)
     target_include_directories(stb INTERFACE ${stb_SOURCE_DIR})
 endif()
 
+# Assimp
+FetchContent_Declare(
+        assimp
+        GIT_REPOSITORY https://github.com/assimp/assimp.git
+        GIT_TAG        d1e6bcff6b01c5da9856a2b6ed52ae9a06dfe8da
+)
+FetchContent_MakeAvailable(assimp)
+
 # APP
 add_executable(3DGraphicsApp src/main.cpp
         src/stb_impl.cpp
@@ -99,4 +107,5 @@ target_link_libraries(3DGraphicsApp PRIVATE
         glfw
         OpenGL::GL
         stb
+        assimp::assimp
 )
