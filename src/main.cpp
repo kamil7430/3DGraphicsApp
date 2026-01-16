@@ -7,6 +7,7 @@
 #include <stb_image.h>
 
 #include "objects/sphere/sphere.h"
+#include "objects/sports_car/sports_car.h"
 
 int windowWidth = 800, windowHeight = 600;
 
@@ -63,6 +64,9 @@ int main() {
     // Sphere
     Sphere sphere(15, 15);
 
+    // Sports car
+    SportsCar sportsCar;
+
     // Constant transform matrices
     glm::mat4 viewMat(1.0f);
     viewMat = glm::translate(viewMat, glm::vec3(0.0f, 0.0f, -3.0f));
@@ -78,7 +82,8 @@ int main() {
         glm::mat4 modelMat(1.0f);
         modelMat = glm::rotate(modelMat, static_cast<float>(glfwGetTime()), glm::vec3(0.5f, 0.2f, 0.0f));
 
-        sphere.draw(modelMat, viewMat, projectionMat);
+        //sphere.draw(modelMat, viewMat, projectionMat);
+        sportsCar.draw(modelMat, viewMat, projectionMat);
 
         glfwSwapBuffers(window);
         glfwPollEvents();

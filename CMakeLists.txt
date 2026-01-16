@@ -95,6 +95,9 @@ add_executable(3DGraphicsApp src/main.cpp
         src/shader.h
         src/objects/sphere/sphere.cpp
         src/objects/sphere/sphere.h
+        src/objects/sports_car/sports_car.cpp
+        src/objects/sports_car/sports_car.h
+        src/model_initializer.h
 )
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
