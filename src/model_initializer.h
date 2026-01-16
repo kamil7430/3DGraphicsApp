@@ -79,7 +79,8 @@ static void processNode(const aiNode *node, const aiScene *scene, std::vector<fl
 }
 
 inline void initialize3dModel(std::vector<float> &vertices, std::vector<unsigned int> &indices, const char source[],
-    unsigned int sourceLength, const char hint[], std::vector<glm::vec4> &materialColors, std::vector<SubMesh> &subMeshes) {
+    unsigned int sourceLength, const char hint[], std::vector<glm::vec4> &materialColors, std::vector<SubMesh> &subMeshes,
+    const float normalizationScalar) {
     Assimp::Importer importer;
 
     auto loadedScene = importer.ReadFileFromMemory(source, sourceLength,
@@ -99,7 +100,7 @@ inline void initialize3dModel(std::vector<float> &vertices, std::vector<unsigned
             throw std::runtime_error("Invalid color!");
     }
 
-    processNode(loadedScene->mRootNode, loadedScene, vertices, indices, glm::mat4(1.0f), subMeshes, 1.0f);
+    processNode(loadedScene->mRootNode, loadedScene, vertices, indices, glm::mat4(1.0f), subMeshes, normalizationScalar);
 }
 
 #endif //INC_3DGRAPHICSAPP_MODEL_INITIALIZER_H

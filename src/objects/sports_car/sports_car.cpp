@@ -22,7 +22,7 @@ SportsCar::SportsCar() : shader(vertexShader, fragmentShader) {
     std::vector<float> vertices = {};
     std::vector<unsigned int> indices = {};
 
-    initialize3dModel(vertices, indices, sportsCar, sizeof(sportsCar), "glb", materialColors, subMeshes);
+    initialize3dModel(vertices, indices, sportsCar, sizeof(sportsCar), "glb", materialColors, subMeshes, 1.0f);
 
     indicesCount = indices.size();
 
