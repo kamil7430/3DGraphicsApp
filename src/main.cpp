@@ -82,8 +82,8 @@ int main() {
         glm::mat4 modelMat(1.0f);
         modelMat = glm::rotate(modelMat, static_cast<float>(glfwGetTime()), glm::vec3(0.5f, 0.2f, 0.0f));
 
-        //sphere.draw(modelMat, viewMat, projectionMat);
-        sportsCar.draw(modelMat, viewMat, projectionMat);
+        sphere.draw(modelMat, viewMat, projectionMat);
+        // sportsCar.draw(modelMat, viewMat, projectionMat);
 
         glfwSwapBuffers(window);
         glfwPollEvents();
