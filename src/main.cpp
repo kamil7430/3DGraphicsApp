@@ -6,6 +6,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <stb_image.h>
 
+#include "objects/rubber_ducky/rubber_ducky.h"
 #include "objects/sphere/sphere.h"
 #include "objects/sports_car/sports_car.h"
 
@@ -67,6 +68,9 @@ int main() {
     // Sports car
     SportsCar sportsCar;
 
+    // Rubber ducky
+    RubberDucky rubberDucky;
+
     // Constant transform matrices
     glm::mat4 viewMat(1.0f);
     viewMat = glm::translate(viewMat, glm::vec3(0.0f, 0.0f, -3.0f));
@@ -83,7 +87,8 @@ int main() {
         modelMat = glm::rotate(modelMat, static_cast<float>(glfwGetTime()), glm::vec3(0.5f, 0.2f, 0.0f));
 
         // sphere.draw(modelMat, viewMat, projectionMat);
-        sportsCar.draw(modelMat, viewMat, projectionMat);
+        // sportsCar.draw(modelMat, viewMat, projectionMat);
+        rubberDucky.draw(modelMat, viewMat, projectionMat);
 
         glfwSwapBuffers(window);
         glfwPollEvents();
