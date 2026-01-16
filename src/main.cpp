@@ -6,11 +6,13 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <stb_image.h>
 
+#include "camera.h"
 #include "objects/rubber_ducky/rubber_ducky.h"
 #include "objects/sphere/sphere.h"
 #include "objects/sports_car/sports_car.h"
 
 int windowWidth = 800, windowHeight = 600;
+CameraStrategy *cameraStrategy = new StationaryCameraStrategy();
 
 void framebuffer_size_callback(GLFWwindow *window, const int width, const int height)
 {
@@ -23,6 +25,18 @@ void processInput(GLFWwindow *window)
 {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
+    if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS) {
+        delete cameraStrategy;
+        cameraStrategy = new StationaryCameraStrategy();
+    }
+    if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS) {
+        delete cameraStrategy;
+        cameraStrategy = new StationaryFollowingCameraStrategy();
+    }
+    if (glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS) {
+        delete cameraStrategy;
+        cameraStrategy = new CarThirdPersonCameraStrategy();
+    }
 }
 
 float aspectRatio() {
@@ -62,19 +76,12 @@ int main() {
     glEnable(GL_DEPTH_TEST);
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 
-    // Sphere
+    // Objects
     Sphere sphere(15, 15);
-
-    // Sports car
     SportsCar sportsCar;
-
-    // Rubber ducky
     RubberDucky rubberDucky;
 
     // Constant transform matrices
-    constexpr glm::mat4 identity(1.0f);
-    glm::mat4 view = glm::rotate(identity, glm::radians(10.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-    view = glm::translate(view, glm::vec3(0.0f, -3.0f, -10.0f));
     glm::mat4 projection = glm::perspective(glm::radians(60.0f), aspectRatio(), 0.1f, 100.0f);
 
     // Main loop
@@ -84,16 +91,18 @@ int main() {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         const float time = glfwGetTime();
+        const glm::vec3 sportsCarPosition = glm::vec3(std::cos(time) * 3, 0.0f, std::sin(time) * 3);
 
         glm::mat4 sphereModel = glm::rotate(glm::translate(identity, glm::vec3(0.0f, 3.0f, 0.0f)), time,
             glm::vec3(0.5f, 0.2f, 0.0f));
-        sphere.draw(sphereModel, view, projection);
-
-        glm::mat4 sportsCarModel = glm::translate(identity, glm::vec3(std::cos(time) * 5, 0.0f, std::sin(time) * 5));
+        glm::mat4 sportsCarModel = glm::translate(identity, sportsCarPosition);
         sportsCarModel = glm::rotate(sportsCarModel, -time, glm::vec3(0.0f, 1.0f, 0.0f));
-        sportsCar.draw(sportsCarModel, view, projection);
-
         glm::mat4 rubberDuckyModel = glm::rotate(identity, glm::radians(-60.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+
+        glm::mat4 view = cameraStrategy->getViewMatrix(sportsCarPosition);
+
+        sphere.draw(sphereModel, view, projection);
+        sportsCar.draw(sportsCarModel, view, projection);
         rubberDucky.draw(rubberDuckyModel, view, projection);
 
         glfwSwapBuffers(window);
@@ -101,5 +110,6 @@ int main() {
     }
 
     glfwTerminate();
+    delete cameraStrategy;
     return 0;
 }

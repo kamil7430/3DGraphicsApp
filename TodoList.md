@@ -4,10 +4,10 @@ W każdym projekcie:
 
 - [ ] jeden obiekt poruszający się (przesuwanie + obroty)
 - [ ] kilka stałych obiektów. Jeden z nich gładki — kula, torus lub powierzchnia Beziera
-- [ ] Jeśli nie ustalono inaczej, w każdym projekcie min. 3 kamery (przełączanie):
-  - [ ] nieruchoma obserwująca scenę
-  - [ ] nieruchoma śledząca ruchomy obiekt
-  - [ ] związana z ruchomym obiektem (FPP — First Person Perspective lub TPP — Third Person Perspective)
+- [x] Jeśli nie ustalono inaczej, w każdym projekcie min. 3 kamery (przełączanie):
+  - [x] nieruchoma obserwująca scenę
+  - [x] nieruchoma śledząca ruchomy obiekt
+  - [x] związana z ruchomym obiektem (FPP — First Person Perspective lub TPP — Third Person Perspective)
 - [ ] W każdym projekcie kilka źródeł światła (min. 3):
   - [ ] min. jeden reflektor na poruszającym się obiekcie (np. światła samochodu)
   - [ ] musi istnieć możliwość zmiany (ręcznej) względnego kierunku świecenia reflektora/ów umieszczonego na obiekcie ruchomym
