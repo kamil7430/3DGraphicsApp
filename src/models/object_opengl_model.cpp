@@ -39,12 +39,13 @@ ObjectOpenGlModel::ObjectOpenGlModel(const std::vector<float> &vertices, const s
 
 }
 
-void ObjectOpenGlModel::draw(glm::mat4 &model, glm::mat4 &view, glm::mat4 &projection, const std::vector<LightSource> &lightSources) {
+void ObjectOpenGlModel::draw(glm::mat4 &model, glm::mat4 &view, glm::mat4 &projection, const std::vector<LightSource> &lightSources, bool isDay) {
     shader.use();
 
     glUniformMatrix4fv(shader.getUniformLocation("uView"), 1, GL_FALSE, glm::value_ptr(view));
     glUniformMatrix4fv(shader.getUniformLocation("uProjection"), 1, GL_FALSE, glm::value_ptr(projection));
     glUniformMatrix4fv(shader.getUniformLocation("uModel"), 1, GL_FALSE, glm::value_ptr(model));
+    glUniform1i(shader.getUniformLocation("uIsDay"), isDay ? 1 : 0);
 
     assert(lightSources.size() <= 5);
     glUniform1i(shader.getUniformLocation("uLightSourceCount"), lightSources.size());

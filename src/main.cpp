@@ -87,7 +87,6 @@ int main() {
     ImGui_ImplOpenGL3_Init();
 
     glEnable(GL_DEPTH_TEST);
-    glClearColor(0.5f, 0.6f, 0.7f, 1.0f); // Fog color
 
     // Objects
     Floor floor;
@@ -111,6 +110,8 @@ int main() {
     glm::vec3 carFrontReflectorTwist(0.0f);
     float *carFrontReflectorTwistVectorPointer = glm::value_ptr(carFrontReflectorTwist);
 
+    bool isDay = true;
+
     // Main loop
     while (!glfwWindowShouldClose(window)) {
         ImGui_ImplOpenGL3_NewFrame();
@@ -120,10 +121,19 @@ int main() {
         ImGui::Begin("Reflector adjustment:");
         ImGui::SliderFloat3("Yellow one", adjustableReflectorDirectionVector, -1.0f, 1.0f);
         ImGui::SliderFloat3("Car front reflector", carFrontReflectorTwistVectorPointer, -1.0f, 1.0f);
+        ImGui::End();
 
+        ImGui::Begin("Daylight cycle:");
+        ImGui::Checkbox("Day", &isDay);
         ImGui::End();
 
         processInput(window);
+
+        if (isDay) {
+            glClearColor(0.5f, 0.6f, 0.7f, 1.0f); // Fog color
+        } else {
+            glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+        }
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -145,11 +155,11 @@ int main() {
 
         glm::mat4 view = cameraStrategy->getViewMatrix(sportsCarPosition);
 
-        floor.draw(floorModel, view, projection, lightSources);
-        sphere.draw(sphereModel, view, projection, lightSources);
-        sportsCar.draw(sportsCarModel, view, projection, lightSources);
-        rubberDucky.draw(rubberDuckyModel, view, projection, lightSources);
-        pineTree.draw(pineTreeModel, view, projection, lightSources);
+        floor.draw(floorModel, view, projection, lightSources, isDay);
+        sphere.draw(sphereModel, view, projection, lightSources, isDay);
+        sportsCar.draw(sportsCarModel, view, projection, lightSources, isDay);
+        rubberDucky.draw(rubberDuckyModel, view, projection, lightSources, isDay);
+        pineTree.draw(pineTreeModel, view, projection, lightSources, isDay);
 
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

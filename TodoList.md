@@ -15,7 +15,7 @@ W każdym projekcie:
 - [x] rzutowanie perspektywiczne
 - [x] model cieniowania Phonga (Interpolacja wektorów normalnych)
 - [x] mgła — płynna zmiana
-- [ ] noc/dzień
+- [x] noc/dzień
 - [ ] "zanikanie" światła wraz z odległością
 
 Dla mojego zakresu nazwisk:

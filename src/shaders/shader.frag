@@ -16,19 +16,24 @@ in vec3 vFragmentNormal;
 uniform vec4 uObjectColor;
 uniform int uLightSourceCount;
 uniform LightSource uLightSources[MAX_LIGHT_SOURCES];
+uniform int uIsDay;
 
 out vec4 FragColor;
 
 void main()
 {
-    float k_a = 0.1f;
+    float k_a = 0.01f;
     float k_d = 0.8f;
     float k_s = 1.2f;
     int alpha = 5;
-    vec3 fogColor = vec3(0.5f, 0.6f, 0.7f);
+    vec3 fogColor = vec3(0.0f, 0.0f, 0.0f);
+    if (uIsDay > 0) {
+        fogColor = vec3(0.5f, 0.6f, 0.7f);
+    }
     vec3 N = normalize(vFragmentNormal);
     vec3 V = normalize(-vFragmentPos);
     vec3 objectColor = uObjectColor.xyz;
+    vec3 sunDirection = vec3(0.0f, 1.0f, 0.0f);
 
     vec3 finalColor = k_a * objectColor;
     for (int i = 0; i < uLightSourceCount; i++) {
@@ -43,6 +48,10 @@ void main()
         }
 
         finalColor += tempColor;
+    }
+
+    if (uIsDay > 0) {
+        finalColor += k_d * objectColor * vec3(1.0f, 0.8f, 0.9f) * max(dot(sunDirection, N), 0.0f);
     }
 
     float dist = length(vFragmentPos);
