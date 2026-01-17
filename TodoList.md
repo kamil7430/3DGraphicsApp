@@ -1,4 +1,4 @@
-Aplikacja jest kontunuacją aplikacji rozpoczętej na laboartorium, ma pokazywać prostą scenę składającą się kul, sześcianów itp., ale można też (a nawet warto) wczytać złożone modele 3D w popularnych formatach (OBJ, FBX, 3DS, itp.). Można wykorzystać bibliotekę do wczytywania modeli 3D (np. Assimp).
+Aplikacja jest kontynuacją aplikacji rozpoczętej na laboratorium, ma pokazywać prostą scenę składającą się z kul, sześcianów itp., ale można też (a nawet warto) wczytać złożone modele 3D w popularnych formatach (OBJ, FBX, 3DS, itp.). Można wykorzystać bibliotekę do wczytywania modeli 3D (np. Assimp).
 
 W każdym projekcie:
 
@@ -16,7 +16,7 @@ W każdym projekcie:
 - [x] model cieniowania Phonga (Interpolacja wektorów normalnych)
 - [x] mgła — płynna zmiana
 - [x] noc/dzień
-- [ ] "zanikanie" światła wraz z odległością
+- [x] "zanikanie" światła wraz z odległością
 
 Dla mojego zakresu nazwisk:
 

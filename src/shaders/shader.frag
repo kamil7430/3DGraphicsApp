@@ -47,6 +47,9 @@ void main()
             tempColor *= pow(clamp(dot(-L, normalize(uLightSources[i].direction)), 0.0f, 1.0f), float(uLightSources[i].reflection));
         }
 
+        float dist = length(uLightSources[i].position - vFragmentPos);
+        finalColor *= clamp(100.0f / dist / dist, 0.0f, 1.0f);
+
         finalColor += tempColor;
     }
 
