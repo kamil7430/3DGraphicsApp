@@ -3,12 +3,12 @@
 #include <glm/gtc/type_ptr.hpp>
 
 static const char vertexShader[] = {
-    #embed "sports_car.vert"
+    #embed "../../shaders/shader.vert"
     , 0
 };
 
 static const char fragmentShader[] = {
-    #embed "sports_car.frag"
+    #embed "../../shaders/shader.frag"
     , 0
 };
 

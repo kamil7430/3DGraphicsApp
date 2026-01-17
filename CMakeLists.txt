@@ -77,8 +77,8 @@ FetchContent_MakeAvailable(assimp)
 
 # APP
 add_executable(3DGraphicsApp src/main.cpp
-        src/shader.cpp
-        src/shader.h
+        src/shaders/shader.cpp
+        src/shaders/shader.h
         src/objects/sphere/sphere.cpp
         src/objects/sphere/sphere.h
         src/objects/sports_car/sports_car.cpp

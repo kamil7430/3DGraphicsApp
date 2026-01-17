@@ -4,12 +4,12 @@
 #include <vector>
 
 static constexpr char vertexShader[] = {
-    #embed "sphere.vert"
+    #embed "../../shaders/shader.vert"
     , 0
 };
 
 static constexpr char fragmentShader[] = {
-    #embed "sphere.frag"
+    #embed "../../shaders/shader.frag"
     , 0
 };
 
@@ -17,7 +17,6 @@ Sphere::Sphere(const int stackCount, const int sectorCount) {
     // Calculate vertices array
     // Since r = 1, normal vectors are equal to vertices coords
     std::vector<float> vertices = {};
-    // std::vector<float> texCoords = {};
 
     const float sectorStep = 2 * M_PI / sectorCount;
     const float stackStep = M_PI / stackCount;
@@ -35,11 +34,6 @@ Sphere::Sphere(const int stackCount, const int sectorCount) {
             vertices.push_back(x);
             vertices.push_back(y);
             vertices.push_back(z);
-
-            // float s = (float)j / sectorCount;
-            // float t = (float)i / stackCount;
-            // texCoords.push_back(s);
-            // texCoords.push_back(t);
         }
     }
 

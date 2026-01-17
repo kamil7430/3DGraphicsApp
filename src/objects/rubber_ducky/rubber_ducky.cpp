@@ -3,12 +3,12 @@
 #include <glm/gtc/type_ptr.hpp>
 
 static const char vertexShader[] = {
-    #embed "rubber_ducky.vert"
+    #embed "../../shaders/shader.vert"
     , 0
 };
 
 static const char fragmentShader[] = {
-    #embed "rubber_ducky.frag"
+    #embed "../../shaders/shader.frag"
     , 0
 };
 

@@ -5,7 +5,7 @@
 #include <glm/glm.hpp>
 
 #include "model_initializer.h"
-#include "../shader.h"
+#include "../shaders/shader.h"
 
 class ObjectOpenGlModel {
 private:
