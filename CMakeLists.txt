@@ -118,6 +118,7 @@ add_executable(3DGraphicsApp src/main.cpp
         src/light.h
         src/models/objects/floor.h
         src/models/objects/pine_tree.h
+        src/models/objects/mirror_surface.h
 )
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)

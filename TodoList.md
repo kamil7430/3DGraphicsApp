@@ -24,7 +24,7 @@ Dla mojego zakresu nazwisk:
 
 Dodatkowo nalezy uzupełnić projekt o:
 
-- [ ] Lustro na scenie (na ruchomym obiekcie)
+- [x] Lustro na scenie (na ruchomym obiekcie)
 - [ ] możliwość zmiany składowej zwierciadlanej Phong/Blinn
 - [ ] krótka dokumentacja dotycząca zaimplementowanej indywidualnej funkcjonalności
 

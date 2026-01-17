@@ -61,5 +61,5 @@ void main()
     float fogFactor = (FOG_END - dist) / (FOG_END - FOG_START);
     fogFactor = clamp(fogFactor, 0.0f, 1.0f);
 
-    FragColor = vec4(mix(fogColor, clamp(finalColor, 0.0f, 1.0f), fogFactor), 1.0f);
+    FragColor = vec4(mix(fogColor, clamp(finalColor, 0.0f, 1.0f), fogFactor), uObjectColor.w);
 }

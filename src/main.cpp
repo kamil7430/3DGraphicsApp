@@ -10,6 +10,7 @@
 
 #include "camera.h"
 #include "models/objects/floor.h"
+#include "models/objects/mirror_surface.h"
 #include "models/objects/pine_tree.h"
 #include "models/objects/rubber_ducky.h"
 #include "models/objects/sphere.h"
@@ -87,6 +88,8 @@ int main() {
     ImGui_ImplOpenGL3_Init();
 
     glEnable(GL_DEPTH_TEST);
+    glEnable(GL_STENCIL_TEST);
+    glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
 
     // Objects
     Floor floor;
@@ -94,6 +97,7 @@ int main() {
     SportsCar sportsCar;
     RubberDucky rubberDucky;
     PineTree pineTree;
+    MirrorSurface mirrorSurface;
 
     // Constant transform matrices
     projection = glm::perspective(glm::radians(60.0f), aspectRatio(), 0.1f, 100.0f);
@@ -103,8 +107,8 @@ int main() {
     lightSources.push_back(LightSource{glm::vec3(3.0f, 3.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), 0});
     lightSources.push_back(LightSource{.color = glm::vec3(3.0f, 3.0f, 3.0f), .reflection = 2});
     lightSources.push_back(LightSource{.color = glm::vec3(1.0f, 0.0f, 0.0f), .reflection = 2});
-    LightSource *frontCarReflector = &lightSources[1], *rearCarReflector = &lightSources[2];
     lightSources.push_back(LightSource{glm::vec3(-4.0f, 2.0f, 1.0f), glm::vec3(3.0f, 3.0f, 0.0f), 5, glm::vec3(1.0f, -1.0f, 0.0f)});
+    LightSource *frontCarReflector = &lightSources[1], *rearCarReflector = &lightSources[2];
     float *adjustableReflectorDirectionVector = glm::value_ptr(lightSources[3].direction);
 
     glm::vec3 carFrontReflectorTwist(0.0f);
@@ -129,16 +133,10 @@ int main() {
 
         processInput(window);
 
-        if (isDay) {
-            glClearColor(0.5f, 0.6f, 0.7f, 1.0f); // Fog color
-        } else {
-            glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-        }
-
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
         const float time = glfwGetTime();
         const glm::vec3 sportsCarPosition = glm::vec3(std::cos(time) * 3, 0.0f, std::sin(time) * 3);
+        const glm::vec3 mirrorPosition = glm::vec3(std::sin(time / 2) * 3, 0.5f, -6.0f);
+
         frontCarReflector->direction = glm::normalize(glm::vec3(-sportsCarPosition.z, 0, sportsCarPosition.x) + carFrontReflectorTwist);
         frontCarReflector->position = glm::vec3(0.0f, 0.5f, 0.0f) + sportsCarPosition + 2.0f * frontCarReflector->direction;
         rearCarReflector->direction = -frontCarReflector->direction;
@@ -152,14 +150,61 @@ int main() {
         glm::mat4 rubberDuckyModel = glm::rotate(identity, glm::radians(-60.0f), glm::vec3(0.0f, 1.0f, 0.0f));
         glm::mat4 pineTreeModel = glm::translate(identity, glm::vec3(-6.0f, 0.0f, -3.0f));
         pineTreeModel = glm::scale(pineTreeModel, glm::vec3(5.0f, 5.0f, 5.0f));
+        glm::mat4 mirrorModel = glm::translate(identity, mirrorPosition);
 
         glm::mat4 view = cameraStrategy->getViewMatrix(sportsCarPosition);
+
+        if (isDay) {
+            glClearColor(0.5f, 0.6f, 0.7f, 1.0f); // Fog color
+        } else {
+            glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+        }
+
+        glEnable(GL_STENCIL_TEST);
+        glStencilMask(0xFF);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+
+        glStencilFunc(GL_ALWAYS, 1, 0xFF);
+        glStencilMask(0xFF);
+        glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
+        glDepthMask(GL_FALSE);
+
+        mirrorSurface.draw(mirrorModel, view, projection, lightSources, isDay);
+
+        glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
+        glDepthMask(GL_TRUE);
+
+        glStencilFunc(GL_EQUAL, 1, 0xFF);
+        glStencilMask(0x00);
+
+        glm::mat4 reflectedView = identity;
+        reflectedView = glm::translate(reflectedView, mirrorPosition);
+        reflectedView = glm::scale(reflectedView, glm::vec3(1.0f, 1.0f, -1.0f));
+        reflectedView = glm::translate(reflectedView, -mirrorPosition);
+        reflectedView = view * reflectedView;
+
+        glCullFace(GL_FRONT);
+
+        sphere.draw(sphereModel, reflectedView, projection, lightSources, isDay);
+        sportsCar.draw(sportsCarModel, reflectedView, projection, lightSources, isDay);
+        rubberDucky.draw(rubberDuckyModel, reflectedView, projection, lightSources, isDay);
+        pineTree.draw(pineTreeModel, reflectedView, projection, lightSources, isDay);
+
+        glCullFace(GL_BACK);
+        glDisable(GL_STENCIL_TEST);
 
         floor.draw(floorModel, view, projection, lightSources, isDay);
         sphere.draw(sphereModel, view, projection, lightSources, isDay);
         sportsCar.draw(sportsCarModel, view, projection, lightSources, isDay);
         rubberDucky.draw(rubberDuckyModel, view, projection, lightSources, isDay);
         pineTree.draw(pineTreeModel, view, projection, lightSources, isDay);
+
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+        mirrorSurface.draw(mirrorModel, view, projection, lightSources, isDay);
+
+        glDisable(GL_BLEND);
 
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
