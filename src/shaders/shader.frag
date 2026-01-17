@@ -1,5 +1,7 @@
 #version 410 core
 #define MAX_LIGHT_SOURCES 5
+#define FOG_START 10
+#define FOG_END 50
 
 struct LightSource {
     vec3 position;
@@ -23,6 +25,7 @@ void main()
     float k_d = 0.8f;
     float k_s = 1.2f;
     int alpha = 5;
+    vec3 fogColor = vec3(0.5f, 0.6f, 0.7f);
     vec3 N = normalize(vFragmentNormal);
     vec3 V = normalize(-vFragmentPos);
     vec3 objectColor = uObjectColor.xyz;
@@ -41,5 +44,10 @@ void main()
 
         finalColor += tempColor;
     }
-    FragColor = vec4(clamp(finalColor, 0.0f, 1.0f), 1.0f);
+
+    float dist = length(vFragmentPos);
+    float fogFactor = (FOG_END - dist) / (FOG_END - FOG_START);
+    fogFactor = clamp(fogFactor, 0.0f, 1.0f);
+
+    FragColor = vec4(mix(fogColor, clamp(finalColor, 0.0f, 1.0f), fogFactor), 1.0f);
 }

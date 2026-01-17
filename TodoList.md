@@ -14,7 +14,7 @@ W każdym projekcie:
   - [x] min. jedno stałe (nieporuszające się) źródło światła (punktowe lub reflektor)
 - [x] rzutowanie perspektywiczne
 - [x] model cieniowania Phonga (Interpolacja wektorów normalnych)
-- [ ] mgła — płynna zmiana
+- [x] mgła — płynna zmiana
 - [ ] noc/dzień
 - [ ] "zanikanie" światła wraz z odległością
 
