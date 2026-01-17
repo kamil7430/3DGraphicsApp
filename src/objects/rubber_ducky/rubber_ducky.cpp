@@ -2,16 +2,6 @@
 
 #include <glm/gtc/type_ptr.hpp>
 
-static const char vertexShader[] = {
-    #embed "../../shaders/shader.vert"
-    , 0
-};
-
-static const char fragmentShader[] = {
-    #embed "../../shaders/shader.frag"
-    , 0
-};
-
 static const char rubberDucky[] = {
     #embed "../../../assets/rubber-ducky.3ds"
     , 0
@@ -25,5 +15,5 @@ RubberDucky::RubberDucky() {
 
     initialize3dModel(vertices, indices, rubberDucky, sizeof(rubberDucky), "3ds", materialColors, subMeshes, 3.0f);
 
-    openGlModel = new ObjectOpenGlModel(vertices, indices, vertexShader, fragmentShader, subMeshes, materialColors);
+    openGlModel = new ObjectOpenGlModel(vertices, indices, subMeshes, materialColors);
 }

@@ -3,9 +3,18 @@
 #include <glad/gl.h>
 #include <glm/gtc/type_ptr.hpp>
 
+static constexpr char vertexShader[] = {
+    #embed "../shaders/shader.vert"
+    , 0
+};
+
+static constexpr char fragmentShader[] = {
+    #embed "../shaders/shader.frag"
+    , 0
+};
+
 ObjectOpenGlModel::ObjectOpenGlModel(const std::vector<float> &vertices, const std::vector<unsigned int> &indices,
-    const char vertexShader[], const char fragmentShader[], const std::vector<SubMesh> &subMeshes,
-    const std::vector<glm::vec4> &materialColors) : shader(vertexShader, fragmentShader) {
+    const std::vector<SubMesh> &subMeshes, const std::vector<glm::vec4> &materialColors) : shader(vertexShader, fragmentShader) {
     this->subMeshes = subMeshes;
     this->materialColors = materialColors;
     indicesCount = indices.size();

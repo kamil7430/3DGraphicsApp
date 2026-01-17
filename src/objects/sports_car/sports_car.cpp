@@ -2,16 +2,6 @@
 
 #include <glm/gtc/type_ptr.hpp>
 
-static const char vertexShader[] = {
-    #embed "../../shaders/shader.vert"
-    , 0
-};
-
-static const char fragmentShader[] = {
-    #embed "../../shaders/shader.frag"
-    , 0
-};
-
 static const char sportsCar[] = {
     #embed "../../../assets/sports-car.glb"
     , 0
@@ -25,5 +15,5 @@ SportsCar::SportsCar() {
 
     initialize3dModel(vertices, indices, sportsCar, sizeof(sportsCar), "glb", materialColors, subMeshes, 1.0f);
 
-    openGlModel = new ObjectOpenGlModel(vertices, indices, vertexShader, fragmentShader, subMeshes, materialColors);
+    openGlModel = new ObjectOpenGlModel(vertices, indices, subMeshes, materialColors);
 }

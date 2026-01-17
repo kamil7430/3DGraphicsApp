@@ -3,16 +3,6 @@
 
 #include "object_base.h"
 
-static constexpr char vertexShader[] = {
-    #embed "../shaders/shader.vert"
-    , 0
-};
-
-static constexpr char fragmentShader[] = {
-    #embed "../shaders/shader.frag"
-    , 0
-};
-
 class Floor final : public ObjectBase {
 public:
     Floor() {
@@ -35,7 +25,7 @@ public:
         std::vector<glm::vec4> materials = {};
         materials.push_back(glm::vec4(0.2f, 0.2f, 0.2f, 1.0f));
 
-        openGlModel = new ObjectOpenGlModel(vertices, indices, vertexShader, fragmentShader, subMeshes, materials);
+        openGlModel = new ObjectOpenGlModel(vertices, indices, subMeshes, materials);
     }
 };
 

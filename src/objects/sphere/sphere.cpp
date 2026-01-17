@@ -3,16 +3,6 @@
 #include <cmath>
 #include <vector>
 
-static constexpr char vertexShader[] = {
-    #embed "../../shaders/shader.vert"
-    , 0
-};
-
-static constexpr char fragmentShader[] = {
-    #embed "../../shaders/shader.frag"
-    , 0
-};
-
 Sphere::Sphere(const int stackCount, const int sectorCount) {
     // Calculate vertices array
     // Since r = 1, normal vectors are equal to vertices coords
@@ -66,5 +56,5 @@ Sphere::Sphere(const int stackCount, const int sectorCount) {
     std::vector<glm::vec4> materials{};
     materials.push_back(glm::vec4(0.2f, 0.2f, 0.2f, 1.0f));
 
-    openGlModel = new ObjectOpenGlModel(vertices, indices, vertexShader, fragmentShader, subMeshes, materials);
+    openGlModel = new ObjectOpenGlModel(vertices, indices, subMeshes, materials);
 }
