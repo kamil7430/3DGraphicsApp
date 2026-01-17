@@ -4,7 +4,6 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-#include <stb_image.h>
 
 #include "camera.h"
 #include "objects/rubber_ducky/rubber_ducky.h"
@@ -70,8 +69,6 @@ int main() {
     glViewport(0, 0, windowWidth, windowHeight);
 
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-
-    stbi_set_flip_vertically_on_load(true);
 
     glEnable(GL_DEPTH_TEST);
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
