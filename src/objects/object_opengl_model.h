@@ -6,6 +6,7 @@
 
 #include "model_initializer.h"
 #include "../shaders/shader.h"
+#include "../light.h"
 
 class ObjectOpenGlModel {
 private:
@@ -20,7 +21,7 @@ private:
 public:
     ObjectOpenGlModel(const std::vector<float> &vertices, const std::vector<unsigned int> &indices, const char vertexShader[],
         const char fragmentShader[], const std::vector<SubMesh> &subMeshes, const std::vector<glm::vec4> &materialColors);
-    void draw(glm::mat4 &model, glm::mat4 &view, glm::mat4 &projection);
+    void draw(glm::mat4 &model, glm::mat4 &view, glm::mat4 &projection, const std::vector<LightSource> &lightSources);
     ~ObjectOpenGlModel();
 };
 

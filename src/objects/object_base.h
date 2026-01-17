@@ -8,7 +8,7 @@ protected:
     ObjectOpenGlModel *openGlModel = nullptr;
 
 public:
-    virtual void draw(glm::mat4 &model, glm::mat4 &view, glm::mat4 &projection);
+    virtual void draw(glm::mat4 &model, glm::mat4 &view, glm::mat4 &projection, const std::vector<LightSource> &lightSources);
     virtual ~ObjectBase();
 };
 
