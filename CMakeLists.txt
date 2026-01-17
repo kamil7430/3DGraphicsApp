@@ -101,6 +101,10 @@ add_executable(3DGraphicsApp src/main.cpp
         src/objects/rubber_ducky/rubber_ducky.cpp
         src/objects/rubber_ducky/rubber_ducky.h
         src/camera.h
+        src/objects/object_base.cpp
+        src/objects/object_base.h
+        src/objects/object_opengl_model.cpp
+        src/objects/object_opengl_model.h
 )
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
