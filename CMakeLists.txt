@@ -75,6 +75,33 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(assimp)
 
+# ImGui
+FetchContent_Declare(
+        imgui
+        GIT_REPOSITORY https://github.com/ocornut/imgui.git
+        GIT_TAG        v1.92.5
+)
+FetchContent_MakeAvailable(imgui)
+
+set(IMGUI_SOURCES
+        ${imgui_SOURCE_DIR}/imgui.cpp
+        ${imgui_SOURCE_DIR}/imgui_draw.cpp
+        ${imgui_SOURCE_DIR}/imgui_widgets.cpp
+        ${imgui_SOURCE_DIR}/imgui_tables.cpp
+        ${imgui_SOURCE_DIR}/imgui_demo.cpp
+        ${imgui_SOURCE_DIR}/backends/imgui_impl_glfw.cpp
+        ${imgui_SOURCE_DIR}/backends/imgui_impl_opengl3.cpp
+)
+
+add_library(imgui STATIC ${IMGUI_SOURCES})
+
+target_include_directories(imgui PUBLIC
+        ${imgui_SOURCE_DIR}
+        ${imgui_SOURCE_DIR}/backends
+)
+
+target_link_libraries(imgui PUBLIC glfw glad)
+
 # APP
 add_executable(3DGraphicsApp src/main.cpp
         src/shaders/shader.cpp
@@ -103,4 +130,5 @@ target_link_libraries(3DGraphicsApp PRIVATE
         glfw
         OpenGL::GL
         assimp::assimp
+        imgui
 )

@@ -2,15 +2,15 @@ Aplikacja jest kontunuacją aplikacji rozpoczętej na laboartorium, ma pokazywa�
 
 W każdym projekcie:
 
-- [ ] jeden obiekt poruszający się (przesuwanie + obroty)
-- [ ] kilka stałych obiektów. Jeden z nich gładki — kula, torus lub powierzchnia Beziera
+- [x] jeden obiekt poruszający się (przesuwanie + obroty)
+- [x] kilka stałych obiektów. Jeden z nich gładki — kula, torus lub powierzchnia Beziera
 - [x] Jeśli nie ustalono inaczej, w każdym projekcie min. 3 kamery (przełączanie):
   - [x] nieruchoma obserwująca scenę
   - [x] nieruchoma śledząca ruchomy obiekt
   - [x] związana z ruchomym obiektem (FPP — First Person Perspective lub TPP — Third Person Perspective)
-- [ ] W każdym projekcie kilka źródeł światła (min. 3):
+- [x] W każdym projekcie kilka źródeł światła (min. 3):
   - [x] min. jeden reflektor na poruszającym się obiekcie (np. światła samochodu)
-  - [ ] musi istnieć możliwość zmiany (ręcznej) względnego kierunku świecenia reflektora/ów umieszczonego na obiekcie ruchomym
+  - [x] musi istnieć możliwość zmiany (ręcznej) względnego kierunku świecenia reflektora/ów umieszczonego na obiekcie ruchomym
   - [x] min. jedno stałe (nieporuszające się) źródło światła (punktowe lub reflektor)
 - [x] rzutowanie perspektywiczne
 - [x] model cieniowania Phonga (Interpolacja wektorów normalnych)

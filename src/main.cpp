@@ -4,6 +4,9 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <imgui.h>
+#include <imgui_impl_glfw.h>
+#include <imgui_impl_opengl3.h>
 
 #include "camera.h"
 #include "models/objects/floor.h"
@@ -74,6 +77,15 @@ int main() {
 
     glfwSetFramebufferSizeCallback(window, framebufferSizeCallback);
 
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+    ImGuiIO& io = ImGui::GetIO();
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;
+
+    ImGui_ImplGlfw_InitForOpenGL(window, true);
+    ImGui_ImplOpenGL3_Init();
+
     glEnable(GL_DEPTH_TEST);
     glClearColor(0.5f, 0.6f, 0.7f, 1.0f); // Fog color
 
@@ -93,16 +105,31 @@ int main() {
     lightSources.push_back(LightSource{.color = glm::vec3(3.0f, 3.0f, 3.0f), .reflection = 2});
     lightSources.push_back(LightSource{.color = glm::vec3(1.0f, 0.0f, 0.0f), .reflection = 2});
     LightSource *frontCarReflector = &lightSources[1], *rearCarReflector = &lightSources[2];
+    lightSources.push_back(LightSource{glm::vec3(-4.0f, 2.0f, 1.0f), glm::vec3(3.0f, 3.0f, 0.0f), 5, glm::vec3(1.0f, -1.0f, 0.0f)});
+    float *adjustableReflectorDirectionVector = glm::value_ptr(lightSources[3].direction);
+
+    glm::vec3 carFrontReflectorTwist(0.0f);
+    float *carFrontReflectorTwistVectorPointer = glm::value_ptr(carFrontReflectorTwist);
 
     // Main loop
     while (!glfwWindowShouldClose(window)) {
+        ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplGlfw_NewFrame();
+        ImGui::NewFrame();
+
+        ImGui::Begin("Reflector adjustment:");
+        ImGui::SliderFloat3("Yellow one", adjustableReflectorDirectionVector, -1.0f, 1.0f);
+        ImGui::SliderFloat3("Car front reflector", carFrontReflectorTwistVectorPointer, -1.0f, 1.0f);
+
+        ImGui::End();
+
         processInput(window);
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         const float time = glfwGetTime();
         const glm::vec3 sportsCarPosition = glm::vec3(std::cos(time) * 3, 0.0f, std::sin(time) * 3);
-        frontCarReflector->direction = glm::normalize(glm::vec3(-sportsCarPosition.z, 0, sportsCarPosition.x));;
+        frontCarReflector->direction = glm::normalize(glm::vec3(-sportsCarPosition.z, 0, sportsCarPosition.x) + carFrontReflectorTwist);
         frontCarReflector->position = glm::vec3(0.0f, 0.5f, 0.0f) + sportsCarPosition + 2.0f * frontCarReflector->direction;
         rearCarReflector->direction = -frontCarReflector->direction;
         rearCarReflector->position = glm::vec3(0.0f, 0.5f, 0.0f) + sportsCarPosition + 2.0f * rearCarReflector->direction;
@@ -124,10 +151,16 @@ int main() {
         rubberDucky.draw(rubberDuckyModel, view, projection, lightSources);
         pineTree.draw(pineTreeModel, view, projection, lightSources);
 
+        ImGui::Render();
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
 
+    ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplGlfw_Shutdown();
+    ImGui::DestroyContext();
     glfwTerminate();
     delete cameraStrategy;
     return 0;
