@@ -6,6 +6,8 @@
 struct LightSource {
     glm::vec3 position;
     glm::vec3 color;
+    int reflection;
+    glm::vec3 direction;
 };
 
 #endif //INC_3DGRAPHICSAPP_LIGHT_H

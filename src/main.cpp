@@ -6,6 +6,7 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include "camera.h"
+#include "objects/floor.h"
 #include "objects/rubber_ducky/rubber_ducky.h"
 #include "objects/sphere/sphere.h"
 #include "objects/sports_car/sports_car.h"
@@ -76,6 +77,7 @@ int main() {
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
     // Objects
+    Floor floor;
     Sphere sphere(100, 100);
     SportsCar sportsCar;
     RubberDucky rubberDucky;
@@ -85,7 +87,10 @@ int main() {
 
     // Light sources
     std::vector<LightSource> lightSources = {};
-    lightSources.push_back(LightSource{glm::vec3(3.0f, 3.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f)});
+    lightSources.push_back(LightSource{glm::vec3(3.0f, 3.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), 0});
+    lightSources.push_back(LightSource{.color = glm::vec3(3.0f, 3.0f, 3.0f), .reflection = 2});
+    lightSources.push_back(LightSource{.color = glm::vec3(1.0f, 0.0f, 0.0f), .reflection = 2});
+    LightSource *frontCarReflector = &lightSources[1], *rearCarReflector = &lightSources[2];
 
     // Main loop
     while (!glfwWindowShouldClose(window)) {
@@ -95,7 +100,12 @@ int main() {
 
         const float time = glfwGetTime();
         const glm::vec3 sportsCarPosition = glm::vec3(std::cos(time) * 3, 0.0f, std::sin(time) * 3);
+        frontCarReflector->direction = glm::normalize(glm::vec3(-sportsCarPosition.z, 0, sportsCarPosition.x));;
+        frontCarReflector->position = glm::vec3(0.0f, 0.5f, 0.0f) + sportsCarPosition + 2.0f * frontCarReflector->direction;
+        rearCarReflector->direction = -frontCarReflector->direction;
+        rearCarReflector->position = glm::vec3(0.0f, 0.5f, 0.0f) + sportsCarPosition + 2.0f * rearCarReflector->direction;
 
+        glm::mat4 floorModel = glm::scale(identity, glm::vec3(100.0f, 100.0f, 100.0f));
         glm::mat4 sphereModel = glm::rotate(glm::translate(identity, glm::vec3(0.0f, 3.0f, 0.0f)), time,
             glm::vec3(0.5f, 0.2f, 0.0f));
         glm::mat4 sportsCarModel = glm::translate(identity, sportsCarPosition);
@@ -104,6 +114,7 @@ int main() {
 
         glm::mat4 view = cameraStrategy->getViewMatrix(sportsCarPosition);
 
+        floor.draw(floorModel, view, projection, lightSources);
         sphere.draw(sphereModel, view, projection, lightSources);
         sportsCar.draw(sportsCarModel, view, projection, lightSources);
         rubberDucky.draw(rubberDuckyModel, view, projection, lightSources);

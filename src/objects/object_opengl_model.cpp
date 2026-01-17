@@ -40,14 +40,22 @@ void ObjectOpenGlModel::draw(glm::mat4 &model, glm::mat4 &view, glm::mat4 &proje
     assert(lightSources.size() <= 5);
     glUniform1i(shader.getUniformLocation("uLightSourceCount"), lightSources.size());
     for (int i = 0; i < lightSources.size(); i++) {
-        const glm::vec3 positionVec = glm::vec3(view * glm::vec4(lightSources[i].position, 1.0f));
         std::string index = std::to_string(i);
 
         std::string position = "uLightSources[" + index + "].position";
         std::string color = "uLightSources[" + index + "].color";
+        std::string reflection = "uLightSources[" + index + "].reflection";
+        std::string direction = "uLightSources[" + index + "].direction";
 
+        const glm::vec3 positionVec = glm::vec3(view * glm::vec4(lightSources[i].position, 1.0f));
         glUniform3fv(shader.getUniformLocation(position.c_str()), 1, glm::value_ptr(positionVec));
         glUniform3fv(shader.getUniformLocation(color.c_str()), 1, glm::value_ptr(lightSources[i].color));
+        glUniform1i(shader.getUniformLocation(reflection.c_str()), lightSources[i].reflection);
+
+        if (lightSources[i].reflection > 0) {
+            const glm::vec3 directionVec = glm::mat3(view) * lightSources[i].direction;
+            glUniform3fv(shader.getUniformLocation(direction.c_str()), 1, glm::value_ptr(directionVec));
+        }
     }
 
     glBindVertexArray(vao);

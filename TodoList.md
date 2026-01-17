@@ -9,7 +9,7 @@ W każdym projekcie:
   - [x] nieruchoma śledząca ruchomy obiekt
   - [x] związana z ruchomym obiektem (FPP — First Person Perspective lub TPP — Third Person Perspective)
 - [ ] W każdym projekcie kilka źródeł światła (min. 3):
-  - [ ] min. jeden reflektor na poruszającym się obiekcie (np. światła samochodu)
+  - [x] min. jeden reflektor na poruszającym się obiekcie (np. światła samochodu)
   - [ ] musi istnieć możliwość zmiany (ręcznej) względnego kierunku świecenia reflektora/ów umieszczonego na obiekcie ruchomym
   - [x] min. jedno stałe (nieporuszające się) źródło światła (punktowe lub reflektor)
 - [x] rzutowanie perspektywiczne

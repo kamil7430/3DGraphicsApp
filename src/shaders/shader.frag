@@ -4,10 +4,12 @@
 struct LightSource {
     vec3 position;
     vec3 color;
+    int reflection;
+    vec3 direction;
 };
 
-in vec3 ourCameraPos;
-in vec3 ourCameraNormal;
+in vec3 vFragmentPos;
+in vec3 vFragmentNormal;
 
 uniform vec4 uObjectColor;
 uniform int uLightSourceCount;
@@ -17,21 +19,27 @@ out vec4 FragColor;
 
 void main()
 {
-    float k_a = 0.2f;
-    float k_d = 0.5f;
-    float k_s = 0.5f;
+    float k_a = 0.1f;
+    float k_d = 0.8f;
+    float k_s = 1.2f;
     int alpha = 5;
-    vec3 N = normalize(ourCameraNormal);
-    vec3 V = normalize(-ourCameraPos);
+    vec3 N = normalize(vFragmentNormal);
+    vec3 V = normalize(-vFragmentPos);
     vec3 objectColor = uObjectColor.xyz;
 
     vec3 finalColor = k_a * objectColor;
     for (int i = 0; i < uLightSourceCount; i++) {
-        vec3 L = normalize(uLightSources[i].position - ourCameraPos);
+        vec3 L = normalize(uLightSources[i].position - vFragmentPos);
         vec3 R = 2 * dot(L, N) * N - L;
 
-        finalColor += k_d * objectColor * uLightSources[i].color * max(dot(L, N), 0.0f);
-        finalColor += k_s * objectColor * uLightSources[i].color * pow(clamp(dot(R, V), 0.0f, 1.0f), alpha);
+        vec3 tempColor = vec3(0.0f, 0.0f, 0.0f);
+        tempColor += k_d * objectColor * uLightSources[i].color * max(dot(L, N), 0.0f);
+        tempColor += k_s * objectColor * uLightSources[i].color * pow(clamp(dot(R, V), 0.0f, 1.0f), alpha);
+        if (uLightSources[i].reflection > 0) {
+            tempColor *= pow(clamp(dot(-L, normalize(uLightSources[i].direction)), 0.0f, 1.0f), float(uLightSources[i].reflection));
+        }
+
+        finalColor += tempColor;
     }
     FragColor = vec4(clamp(finalColor, 0.0f, 1.0f), 1.0f);
 }
