@@ -103,6 +103,5 @@ target_link_libraries(3DGraphicsApp PRIVATE
         glad
         glfw
         OpenGL::GL
-        stb
         assimp::assimp
 )
