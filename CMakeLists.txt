@@ -90,6 +90,7 @@ add_executable(3DGraphicsApp src/main.cpp
         src/models/object_opengl_model.h
         src/light.h
         src/models/objects/floor.h
+        src/models/objects/pine_tree.h
 )
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)

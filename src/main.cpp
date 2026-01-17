@@ -7,6 +7,7 @@
 
 #include "camera.h"
 #include "models/objects/floor.h"
+#include "models/objects/pine_tree.h"
 #include "models/objects/rubber_ducky.h"
 #include "models/objects/sphere.h"
 #include "models/objects/sports_car.h"
@@ -81,6 +82,7 @@ int main() {
     Sphere sphere(100, 100);
     SportsCar sportsCar;
     RubberDucky rubberDucky;
+    PineTree pineTree;
 
     // Constant transform matrices
     projection = glm::perspective(glm::radians(60.0f), aspectRatio(), 0.1f, 100.0f);
@@ -111,6 +113,8 @@ int main() {
         glm::mat4 sportsCarModel = glm::translate(identity, sportsCarPosition);
         sportsCarModel = glm::rotate(sportsCarModel, -time, glm::vec3(0.0f, 1.0f, 0.0f));
         glm::mat4 rubberDuckyModel = glm::rotate(identity, glm::radians(-60.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+        glm::mat4 pineTreeModel = glm::translate(identity, glm::vec3(-6.0f, 0.0f, -3.0f));
+        pineTreeModel = glm::scale(pineTreeModel, glm::vec3(5.0f, 5.0f, 5.0f));
 
         glm::mat4 view = cameraStrategy->getViewMatrix(sportsCarPosition);
 
@@ -118,6 +122,7 @@ int main() {
         sphere.draw(sphereModel, view, projection, lightSources);
         sportsCar.draw(sportsCarModel, view, projection, lightSources);
         rubberDucky.draw(rubberDuckyModel, view, projection, lightSources);
+        pineTree.draw(pineTreeModel, view, projection, lightSources);
 
         glfwSwapBuffers(window);
         glfwPollEvents();
