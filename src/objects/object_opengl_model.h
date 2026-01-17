@@ -4,7 +4,7 @@
 #include <vector>
 #include <glm/glm.hpp>
 
-#include "../model_initializer.h"
+#include "model_initializer.h"
 #include "../shader.h"
 
 class ObjectOpenGlModel {

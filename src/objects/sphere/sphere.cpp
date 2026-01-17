@@ -2,8 +2,6 @@
 
 #include <cmath>
 #include <vector>
-#include <glad/gl.h>
-#include <glm/gtc/type_ptr.hpp>
 
 static constexpr char vertexShader[] = {
     #embed "sphere.vert"
@@ -15,7 +13,7 @@ static constexpr char fragmentShader[] = {
     , 0
 };
 
-Sphere::Sphere(const int stackCount, const int sectorCount) : shader(vertexShader, fragmentShader) {
+Sphere::Sphere(const int stackCount, const int sectorCount) {
     // Calculate vertices array
     // Since r = 1, normal vectors are equal to vertices coords
     std::vector<float> vertices = {};
@@ -68,41 +66,11 @@ Sphere::Sphere(const int stackCount, const int sectorCount) : shader(vertexShade
             }
         }
     }
-    indicesCount = indices.size();
 
-    // Initialize OpenGL objects
-    shader.use();
+    std::vector<SubMesh> subMeshes{};
+    subMeshes.push_back(SubMesh{static_cast<unsigned int>(indices.size()) * 3, 0, 0});
+    std::vector<glm::vec4> materials{};
+    materials.push_back(glm::vec4(0.2f, 0.2f, 0.2f, 1.0f));
 
-    glGenVertexArrays(1, &vao);
-    glBindVertexArray(vao);
-
-    glGenBuffers(1, &vbo);
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(float), vertices.data(), GL_STATIC_DRAW);
-
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), reinterpret_cast<void *>(0));
-    glEnableVertexAttribArray(0);
-    // glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), reinterpret_cast<void*>(6 * sizeof(float)));
-    // glEnableVertexAttribArray(2);
-
-    glGenBuffers(1, &ebo);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(int), indices.data(), GL_STATIC_DRAW);
-}
-
-void Sphere::draw(glm::mat4 &model, glm::mat4 &view, glm::mat4 &projection) {
-    shader.use();
-
-    glUniformMatrix4fv(shader.getUniformLocation("uView"), 1, GL_FALSE, glm::value_ptr(view));
-    glUniformMatrix4fv(shader.getUniformLocation("uProjection"), 1, GL_FALSE, glm::value_ptr(projection));
-    glUniformMatrix4fv(shader.getUniformLocation("uModel"), 1, GL_FALSE, glm::value_ptr(model));
-
-    glBindVertexArray(vao);
-    glDrawElements(GL_TRIANGLES, indicesCount, GL_UNSIGNED_INT, nullptr);
-}
-
-Sphere::~Sphere() {
-    glDeleteBuffers(1, &ebo);
-    glDeleteBuffers(1, &vbo);
-    glDeleteVertexArrays(1, &vao);
+    openGlModel = new ObjectOpenGlModel(vertices, indices, vertexShader, fragmentShader, subMeshes, materials);
 }

@@ -77,7 +77,7 @@ int main() {
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 
     // Objects
-    Sphere sphere(15, 15);
+    Sphere sphere(100, 100);
     SportsCar sportsCar;
     RubberDucky rubberDucky;
 
