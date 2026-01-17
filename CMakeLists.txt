@@ -77,7 +77,6 @@ FetchContent_MakeAvailable(assimp)
 
 # APP
 add_executable(3DGraphicsApp src/main.cpp
-        src/stb_impl.cpp
         src/shader.cpp
         src/shader.h
         src/objects/sphere/sphere.cpp
