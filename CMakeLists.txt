@@ -79,20 +79,17 @@ FetchContent_MakeAvailable(assimp)
 add_executable(3DGraphicsApp src/main.cpp
         src/shaders/shader.cpp
         src/shaders/shader.h
-        src/objects/sphere/sphere.cpp
-        src/objects/sphere/sphere.h
-        src/objects/sports_car/sports_car.cpp
-        src/objects/sports_car/sports_car.h
-        src/objects/model_initializer.h
-        src/objects/rubber_ducky/rubber_ducky.cpp
-        src/objects/rubber_ducky/rubber_ducky.h
+        src/models/objects/sphere.h
+        src/models/objects/sports_car.h
+        src/models/model_initializer.h
+        src/models/objects/rubber_ducky.h
         src/camera.h
-        src/objects/object_base.cpp
-        src/objects/object_base.h
-        src/objects/object_opengl_model.cpp
-        src/objects/object_opengl_model.h
+        src/models/object_base.cpp
+        src/models/object_base.h
+        src/models/object_opengl_model.cpp
+        src/models/object_opengl_model.h
         src/light.h
-        src/objects/floor.h
+        src/models/objects/floor.h
 )
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)

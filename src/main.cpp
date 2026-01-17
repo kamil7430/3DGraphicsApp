@@ -6,10 +6,10 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include "camera.h"
-#include "objects/floor.h"
-#include "objects/rubber_ducky/rubber_ducky.h"
-#include "objects/sphere/sphere.h"
-#include "objects/sports_car/sports_car.h"
+#include "models/objects/floor.h"
+#include "models/objects/rubber_ducky.h"
+#include "models/objects/sphere.h"
+#include "models/objects/sports_car.h"
 
 int windowWidth = 800, windowHeight = 600;
 CameraStrategy *cameraStrategy = new StationaryCameraStrategy();

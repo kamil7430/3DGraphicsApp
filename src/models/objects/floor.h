@@ -1,7 +1,7 @@
 #ifndef INC_3DGRAPHICSAPP_FLOOR_H
 #define INC_3DGRAPHICSAPP_FLOOR_H
 
-#include "object_base.h"
+#include "../object_base.h"
 
 class Floor final : public ObjectBase {
 public:
