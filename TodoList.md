@@ -11,16 +11,16 @@ W każdym projekcie:
 - [ ] W każdym projekcie kilka źródeł światła (min. 3):
   - [ ] min. jeden reflektor na poruszającym się obiekcie (np. światła samochodu)
   - [ ] musi istnieć możliwość zmiany (ręcznej) względnego kierunku świecenia reflektora/ów umieszczonego na obiekcie ruchomym
-  - [ ] min. jedno stałe (nieporuszające się) źródło światła (punktowe lub reflektor)
-- [ ] rzutowanie perspektywiczne
-- [ ] model cieniowania Phonga (Interpolacja wektorów normalnych)
+  - [x] min. jedno stałe (nieporuszające się) źródło światła (punktowe lub reflektor)
+- [x] rzutowanie perspektywiczne
+- [x] model cieniowania Phonga (Interpolacja wektorów normalnych)
 - [ ] mgła — płynna zmiana
 - [ ] noc/dzień
 - [ ] "zanikanie" światła wraz z odległością
 
 Dla mojego zakresu nazwisk:
 
-- [ ] model oświetlenia liczony jest w układzie kamery
+- [x] model oświetlenia liczony jest w układzie kamery
 
 Dodatkowo nalezy uzupełnić projekt o:
 

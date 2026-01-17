@@ -40,12 +40,13 @@ void ObjectOpenGlModel::draw(glm::mat4 &model, glm::mat4 &view, glm::mat4 &proje
     assert(lightSources.size() <= 5);
     glUniform1i(shader.getUniformLocation("uLightSourceCount"), lightSources.size());
     for (int i = 0; i < lightSources.size(); i++) {
+        const glm::vec3 positionVec = glm::vec3(view * glm::vec4(lightSources[i].position, 1.0f));
         std::string index = std::to_string(i);
 
         std::string position = "uLightSources[" + index + "].position";
         std::string color = "uLightSources[" + index + "].color";
 
-        glUniform3fv(shader.getUniformLocation(position.c_str()), 1, glm::value_ptr(lightSources[i].position));
+        glUniform3fv(shader.getUniformLocation(position.c_str()), 1, glm::value_ptr(positionVec));
         glUniform3fv(shader.getUniformLocation(color.c_str()), 1, glm::value_ptr(lightSources[i].color));
     }
 

@@ -12,13 +12,7 @@
 
 int windowWidth = 800, windowHeight = 600;
 CameraStrategy *cameraStrategy = new StationaryCameraStrategy();
-
-void framebuffer_size_callback(GLFWwindow *window, const int width, const int height)
-{
-    glViewport(0, 0, width, height);
-    windowWidth = width;
-    windowHeight = height;
-}
+glm::mat4 projection;
 
 void processInput(GLFWwindow *window)
 {
@@ -40,6 +34,14 @@ void processInput(GLFWwindow *window)
 
 float aspectRatio() {
     return static_cast<float>(windowWidth) / static_cast<float>(windowHeight);
+}
+
+void framebufferSizeCallback(GLFWwindow *window, const int width, const int height)
+{
+    glViewport(0, 0, width, height);
+    windowWidth = width;
+    windowHeight = height;
+    projection = glm::perspective(glm::radians(60.0f), aspectRatio(), 0.1f, 100.0f);
 }
 
 int main() {
@@ -68,10 +70,10 @@ int main() {
 
     glViewport(0, 0, windowWidth, windowHeight);
 
-    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+    glfwSetFramebufferSizeCallback(window, framebufferSizeCallback);
 
     glEnable(GL_DEPTH_TEST);
-    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
     // Objects
     Sphere sphere(100, 100);
@@ -79,7 +81,11 @@ int main() {
     RubberDucky rubberDucky;
 
     // Constant transform matrices
-    glm::mat4 projection = glm::perspective(glm::radians(60.0f), aspectRatio(), 0.1f, 100.0f);
+    projection = glm::perspective(glm::radians(60.0f), aspectRatio(), 0.1f, 100.0f);
+
+    // Light sources
+    std::vector<LightSource> lightSources = {};
+    lightSources.push_back(LightSource{glm::vec3(3.0f, 3.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f)});
 
     // Main loop
     while (!glfwWindowShouldClose(window)) {
@@ -98,9 +104,9 @@ int main() {
 
         glm::mat4 view = cameraStrategy->getViewMatrix(sportsCarPosition);
 
-        sphere.draw(sphereModel, view, projection);
-        sportsCar.draw(sportsCarModel, view, projection);
-        rubberDucky.draw(rubberDuckyModel, view, projection);
+        sphere.draw(sphereModel, view, projection, lightSources);
+        sportsCar.draw(sportsCarModel, view, projection, lightSources);
+        rubberDucky.draw(rubberDuckyModel, view, projection, lightSources);
 
         glfwSwapBuffers(window);
         glfwPollEvents();
