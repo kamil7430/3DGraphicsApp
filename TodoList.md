@@ -26,7 +26,7 @@ Dodatkowo nalezy uzupełnić projekt o:
 
 - [x] Lustro na scenie (na ruchomym obiekcie)
 - [x] możliwość zmiany składowej zwierciadlanej Phong/Blinn
-- [ ] krótka dokumentacja dotycząca zaimplementowanej indywidualnej funkcjonalności
+- [x] krótka dokumentacja dotycząca zaimplementowanej indywidualnej funkcjonalności
 
 Proszę pamiętać o:
 
