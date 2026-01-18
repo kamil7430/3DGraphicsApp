@@ -8,7 +8,7 @@ Najpierw należało wskazać OpenGL-owi, że będzie potrzebny *Stencil Buffer*.
 
 ### Etap 2
 
-Następnie, mając już zainicjowany *Stencil Buffer*, tworzymy macierz widoku, która jest lustrzanym odbiciem **względem punktu, w którym jest lustro**. Włączony *Stencil Buffer* działa w tym przypadku jak filtr, który pozwala rysować tylko po pikselach, które są na powierzchni lustra. Rysujemy scenę, korzystając z wspomnianej macierzy widoku.
+Następnie, mając już zainicjowany *Stencil Buffer*, tworzymy macierz widoku, która jest lustrzanym odbiciem **względem płaszczyzny, w którym jest lustro**. Włączony *Stencil Buffer* działa w tym przypadku jak filtr, który pozwala rysować tylko po pikselach, które są na powierzchni lustra. Rysujemy scenę, korzystając z wspomnianej macierzy widoku.
 
 ### Etap 3
 
