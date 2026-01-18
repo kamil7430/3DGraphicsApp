@@ -115,6 +115,7 @@ int main() {
     float *carFrontReflectorTwistVectorPointer = glm::value_ptr(carFrontReflectorTwist);
 
     bool isDay = true;
+    float k_s = 0.8f;
 
     // Main loop
     while (!glfwWindowShouldClose(window)) {
@@ -125,6 +126,7 @@ int main() {
         ImGui::Begin("Reflector adjustment:");
         ImGui::SliderFloat3("Yellow one", adjustableReflectorDirectionVector, -1.0f, 1.0f);
         ImGui::SliderFloat3("Car front reflector", carFrontReflectorTwistVectorPointer, -1.0f, 1.0f);
+        ImGui::SliderFloat("Specular reflection constant", &k_s, 0.0f, 3.0f);
         ImGui::End();
 
         ImGui::Begin("Daylight cycle:");
@@ -169,7 +171,7 @@ int main() {
         glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
         glDepthMask(GL_FALSE);
 
-        mirrorSurface.draw(mirrorModel, view, projection, lightSources, isDay);
+        mirrorSurface.draw(mirrorModel, view, projection, lightSources, isDay, k_s);
 
         glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
         glDepthMask(GL_TRUE);
@@ -185,24 +187,24 @@ int main() {
 
         glCullFace(GL_FRONT);
 
-        sphere.draw(sphereModel, reflectedView, projection, lightSources, isDay);
-        sportsCar.draw(sportsCarModel, reflectedView, projection, lightSources, isDay);
-        rubberDucky.draw(rubberDuckyModel, reflectedView, projection, lightSources, isDay);
-        pineTree.draw(pineTreeModel, reflectedView, projection, lightSources, isDay);
+        sphere.draw(sphereModel, reflectedView, projection, lightSources, isDay, k_s);
+        sportsCar.draw(sportsCarModel, reflectedView, projection, lightSources, isDay, k_s);
+        rubberDucky.draw(rubberDuckyModel, reflectedView, projection, lightSources, isDay, k_s);
+        pineTree.draw(pineTreeModel, reflectedView, projection, lightSources, isDay, k_s);
 
         glCullFace(GL_BACK);
         glDisable(GL_STENCIL_TEST);
 
-        floor.draw(floorModel, view, projection, lightSources, isDay);
-        sphere.draw(sphereModel, view, projection, lightSources, isDay);
-        sportsCar.draw(sportsCarModel, view, projection, lightSources, isDay);
-        rubberDucky.draw(rubberDuckyModel, view, projection, lightSources, isDay);
-        pineTree.draw(pineTreeModel, view, projection, lightSources, isDay);
+        floor.draw(floorModel, view, projection, lightSources, isDay, k_s);
+        sphere.draw(sphereModel, view, projection, lightSources, isDay, k_s);
+        sportsCar.draw(sportsCarModel, view, projection, lightSources, isDay, k_s);
+        rubberDucky.draw(rubberDuckyModel, view, projection, lightSources, isDay, k_s);
+        pineTree.draw(pineTreeModel, view, projection, lightSources, isDay, k_s);
 
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-        mirrorSurface.draw(mirrorModel, view, projection, lightSources, isDay);
+        mirrorSurface.draw(mirrorModel, view, projection, lightSources, isDay, k_s);
 
         glDisable(GL_BLEND);
 

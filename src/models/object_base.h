@@ -8,7 +8,8 @@ protected:
     ObjectOpenGlModel *openGlModel = nullptr;
 
 public:
-    virtual void draw(glm::mat4 &model, glm::mat4 &view, glm::mat4 &projection, const std::vector<LightSource> &lightSources, bool isDay);
+    virtual void draw(glm::mat4 &model, glm::mat4 &view, glm::mat4 &projection, const std::vector<LightSource> &lightSources,
+        bool isDay, float k_s);
     virtual ~ObjectBase();
 };
 
