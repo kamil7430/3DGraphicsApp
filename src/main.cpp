@@ -187,6 +187,8 @@ int main() {
 
         glCullFace(GL_FRONT);
 
+        glm::mat4 floorReflectedModel = glm::translate(floorModel, glm::vec3(0.0f, 0.00001f, 0.0f));
+        floor.draw(floorReflectedModel, reflectedView, projection, lightSources, isDay, k_s);
         sphere.draw(sphereModel, reflectedView, projection, lightSources, isDay, k_s);
         sportsCar.draw(sportsCarModel, reflectedView, projection, lightSources, isDay, k_s);
         rubberDucky.draw(rubberDuckyModel, reflectedView, projection, lightSources, isDay, k_s);
